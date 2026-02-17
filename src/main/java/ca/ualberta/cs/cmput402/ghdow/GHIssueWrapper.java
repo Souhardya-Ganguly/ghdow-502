@@ -15,4 +15,9 @@ public class GHIssueWrapper {
     public Date getCreatedAt() throws IOException {
         return ghIssue.getCreatedAt();
     }
+
+    public Date getClosedAt() throws IOException {
+        return ghIssue.getClosedAt();
+    }
+
 }

@@ -22,9 +22,33 @@ public class MyGithub {
         return myself;
     }
 
-    public String getGithubName() throws IOException {
-        return gitHub.getMyself().getLogin();
+    public MyGithub(GitHub gitHub) {
+        this.gitHub = gitHub;
     }
+
+
+    private <T> Optional<T> withRetries(IOSupplier<T> op, int maxAttempts) {
+        IOException last = null;
+
+        for (int attempt = 1; attempt <= maxAttempts; attempt++) {
+            try {
+                return Optional.ofNullable(op.get());
+            } catch (IOException e) {
+                last = e;
+            }
+        }
+
+        // “gracefully reporting an error message”
+        System.err.println("ERROR: GitHub API operation failed after " + maxAttempts + " attempts."
+                + (last != null ? " Cause: " + last.getMessage() : ""));
+        return Optional.empty();
+    }
+
+    public String getGithubName() {
+        return withRetries(() -> gitHub.getMyself().getLogin(), 3)
+                .orElse("ERROR");
+    }
+
 
     private List<GHRepository> getRepos() throws IOException {
         if (myRepos == null) {
@@ -94,6 +118,116 @@ public class MyGithub {
         }
         return myCommits;
     }
+
+
+    // -----------------------------
+    // Step 1 (2): Average time between commits
+    // -----------------------------
+    public OptionalDouble getAverageTimeBetweenCommitsSeconds() throws IOException {
+        // Collect commit times
+        ArrayList<Date> commitDates = new ArrayList<>();
+        for (GHCommit commit : getCommits()) {
+            Date d = commit.getCommitDate();
+            if (d != null) commitDates.add(d);
+        }
+
+        if (commitDates.size() < 2) return OptionalDouble.empty();
+
+        // Sort ascending
+        commitDates.sort(Comparator.naturalOrder());
+
+        long totalSeconds = 0L;
+        int gaps = 0;
+
+        for (int i = 1; i < commitDates.size(); i++) {
+            long prev = commitDates.get(i - 1).getTime();
+            long curr = commitDates.get(i).getTime();
+            long deltaSeconds = (curr - prev) / 1000L;
+            totalSeconds += deltaSeconds;
+            gaps++;
+        }
+
+        return OptionalDouble.of((double) totalSeconds / (double) gaps);
+    }
+
+    // -----------------------------
+    // Step 1 (3): Avg time issues stay open (closed issues only)
+    // -----------------------------
+    public OptionalDouble getAverageClosedIssueOpenTimeSeconds() throws IOException {
+        long totalSeconds = 0L;
+        int count = 0;
+
+        for (GHRepository repo : getRepos()) {
+            List<GHIssue> issues = repo.getIssues(GHIssueState.CLOSED);
+            for (GHIssue issue : issues) {
+                GHIssueWrapper w = new GHIssueWrapper(issue);
+                Date created = w.getCreatedAt();
+                Date closed = w.getClosedAt(); // should be non-null for closed issues, but be safe
+                if (created != null && closed != null) {
+                    long deltaSeconds = (closed.getTime() - created.getTime()) / 1000L;
+                    if (deltaSeconds >= 0) { // ignore weird data
+                        totalSeconds += deltaSeconds;
+                        count++;
+                    }
+                }
+            }
+        }
+
+        if (count == 0) return OptionalDouble.empty();
+        return OptionalDouble.of((double) totalSeconds / (double) count);
+    }
+
+    // -----------------------------
+    // Step 1 (4): Avg time PRs stay open
+    // (we count only PRs that are closed; open PRs are ignored)
+    // -----------------------------
+    public OptionalDouble getAverageClosedPullRequestOpenTimeSeconds() throws IOException {
+        long totalSeconds = 0L;
+        int count = 0;
+
+        for (GHRepository repo : getRepos()) {
+            // github-api provides listPullRequests for PRs
+            // We include all states and then filter for closed using closedAt != null.
+            PagedIterable<GHPullRequest> prs = repo.listPullRequests(GHIssueState.ALL);
+            for (GHPullRequest pr : prs) {
+                GHPullRequestWrapper w = new GHPullRequestWrapper(pr);
+                Date created = w.getCreatedAt();
+                Date closed = w.getClosedAt();
+                if (created != null && closed != null) {
+                    long deltaSeconds = (closed.getTime() - created.getTime()) / 1000L;
+                    if (deltaSeconds >= 0) {
+                        totalSeconds += deltaSeconds;
+                        count++;
+                    }
+                }
+            }
+        }
+
+        if (count == 0) return OptionalDouble.empty();
+        return OptionalDouble.of((double) totalSeconds / (double) count);
+    }
+
+    // -----------------------------
+    // Step 1 (5): Avg number of branches per repo
+    // -----------------------------
+    public OptionalDouble getAverageBranchesPerRepo() throws IOException {
+        List<GHRepository> repos = getRepos();
+        if (repos.isEmpty()) return OptionalDouble.empty();
+
+        long totalBranches = 0L;
+        int repoCount = 0;
+
+        for (GHRepository repo : repos) {
+            // getBranches returns Map<String, GHBranch>
+            Map<String, GHBranch> branches = repo.getBranches();
+            totalBranches += (branches == null ? 0 : branches.size());
+            repoCount++;
+        }
+
+        if (repoCount == 0) return OptionalDouble.empty();
+        return OptionalDouble.of((double) totalBranches / (double) repoCount);
+    }
+
 
     public ArrayList<Date> getIssueCreateDates() throws IOException {
         ArrayList<Date> result = new ArrayList<>();

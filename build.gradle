@@ -1,6 +1,19 @@
 plugins {
     id 'java'
+    id 'application'
 }
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+
+application {
+    mainClass = 'ca.ualberta.cs.cmput402.ghdow.Main'
+}
+
 
 group 'cmput402.cs.ualberta.ca'
 version '1.0-SNAPSHOT'
@@ -8,14 +21,19 @@ version '1.0-SNAPSHOT'
 repositories {
     mavenCentral()
 }
-
 dependencies {
-    implementation 'org.kohsuke:github-api:1+'
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
-    testImplementation 'org.mockito:mockito-core:5.10.0'
-    testImplementation 'junit:junit:4.13.1'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+    implementation 'org.kohsuke:github-api:1.318'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.2'
+
+    // Align Mockito versions
+    testImplementation 'org.mockito:mockito-core:5.2.0'
+    testImplementation 'org.mockito:mockito-inline:5.2.0'
+    testImplementation 'org.mockito:mockito-junit-jupiter:5.2.0'
+
+    testRuntimeOnly "org.junit.platform:junit-platform-launcher"
 }
+
 
 test {
     useJUnitPlatform()
