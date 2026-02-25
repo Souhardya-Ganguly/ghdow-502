@@ -5,20 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="96cffda1-b3d6-440c-bb91-6e89b5d5c78c" name="Changes" comment="Add example for GHIssueWrapper with multiple commits">
-      <change afterPath="$PROJECT_DIR$/.idea/copilot.data.migration.agent.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/copilot.data.migration.ask2agent.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/copilot.data.migration.edit.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradle.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ca/ualberta/cs/cmput402/ghdow/GHPullRequestWrapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ca/ualberta/cs/cmput402/ghdow/IOSupplier.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ca/ualberta/cs/cmput402/ghdow/GHIssueWrapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ca/ualberta/cs/cmput402/ghdow/GHIssueWrapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ca/ualberta/cs/cmput402/ghdow/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ca/ualberta/cs/cmput402/ghdow/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ca/ualberta/cs/cmput402/ghdow/MyGithub.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ca/ualberta/cs/cmput402/ghdow/MyGithub.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/ca/ualberta/cs/cmput402/ghdow/MyGithubTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ca/ualberta/cs/cmput402/ghdow/MyGithubTest.java" afterDir="false" />
     </list>
@@ -74,8 +61,11 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Application.main.executor": "Run",
+    "Gradle.Download Sources.executor": "Run",
     "Gradle.MyGithubTest.executor": "Run",
-    "Gradle.Tests in 'ghdow.test'.executor": "Coverage",
+    "Gradle.MyGithubTest.getMostPopularDay_throwsWhenCommitDateIsNull.executor": "Run",
+    "Gradle.MyGithubTest.getMostPopularDay_tieReturnsFirstEncounteredDay.executor": "Run",
+    "Gradle.Tests in 'ghdow.test'.executor": "Run",
     "JUnit.Junits.executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.MCP Project settings loaded": "true",
@@ -88,7 +78,7 @@
     "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "feature/refactoring",
     "junie.onboarding.icon.badge.shown": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/Users/souhardyaganguly/Documents/GitHub/ghdow-502",
@@ -113,7 +103,7 @@
       <recent name="ca.ualberta.cs.cmput402.ghdow" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.Tests in 'ghdow.test'">
+  <component name="RunManager" selected="Gradle.MyGithubTest">
     <configuration name="main" type="Application" factoryName="Application">
       <option name="ALTERNATIVE_JRE_PATH" value="temurin-18" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
@@ -150,7 +140,7 @@
       <GradleCoverageDisabled>false</GradleCoverageDisabled>
       <method v="2" />
     </configuration>
-    <configuration name="MyGithubTest.getFirstIssueCreateDate" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="MyGithubTest.getMostPopularDay_throwsWhenCommitDateIsNull" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -163,7 +153,34 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;ca.ualberta.cs.cmput402.ghdow.MyGithubTest.getFirstIssueCreateDate&quot;" />
+            <option value="&quot;ca.ualberta.cs.cmput402.ghdow.MyGithubTest.getMostPopularDay_throwsWhenCommitDateIsNull&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <ExternalSystemDebugDisabled>false</ExternalSystemDebugDisabled>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <GradleProfilingDisabled>false</GradleProfilingDisabled>
+      <GradleCoverageDisabled>false</GradleCoverageDisabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="MyGithubTest.getMostPopularDay_tieReturnsFirstEncounteredDay" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;ca.ualberta.cs.cmput402.ghdow.MyGithubTest.getMostPopularDay_tieReturnsFirstEncounteredDay&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -232,18 +249,20 @@
     </configuration>
     <list>
       <item itemvalue="Application.main" />
+      <item itemvalue="Gradle.MyGithubTest.getMostPopularDay_throwsWhenCommitDateIsNull" />
+      <item itemvalue="Gradle.MyGithubTest.getMostPopularDay_tieReturnsFirstEncounteredDay" />
       <item itemvalue="Gradle.MyGithubTest" />
       <item itemvalue="Gradle.Tests in 'ghdow.test'" />
-      <item itemvalue="Gradle.MyGithubTest.getFirstIssueCreateDate" />
       <item itemvalue="JUnit.Junits" />
       <item itemvalue="Python tests.Python tests in test" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.Tests in 'ghdow.test'" />
         <item itemvalue="Gradle.MyGithubTest" />
+        <item itemvalue="Gradle.MyGithubTest.getMostPopularDay_throwsWhenCommitDateIsNull" />
+        <item itemvalue="Gradle.MyGithubTest.getMostPopularDay_tieReturnsFirstEncounteredDay" />
+        <item itemvalue="Gradle.Tests in 'ghdow.test'" />
         <item itemvalue="Python tests.Python tests in test" />
-        <item itemvalue="Gradle.MyGithubTest.getFirstIssueCreateDate" />
       </list>
     </recent_temporary>
   </component>
@@ -342,6 +361,11 @@
           <properties class="org.kohsuke.github.GHException" package="org.kohsuke.github" />
           <option name="timeStamp" value="1" />
         </breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/ca/ualberta/cs/cmput402/ghdow/MyGithubTest.java</url>
+          <line>146</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>

@@ -123,9 +123,38 @@ class MyGithubTest {
         assertEquals("Monday", my.getMostPopularDay());
     }
 
-    // -----------------------------
-    // Step 1 (2): getAverageTimeBetweenCommitsSeconds()
-    // -----------------------------
+    @Test
+    void getMostPopularDay_tieReturnsFirstEncounteredDay() throws IOException {
+        GitHub gh = mock(GitHub.class);
+        MyGithub my = spy(new MyGithub(gh));
+
+        // Two Mondays, Two Tuesdays
+        List<GHCommit> commits = Arrays.asList(
+                commitAt(dateUTC(2024, Calendar.JANUARY, 1, 10, 0, 0)), // Mon
+                commitAt(dateUTC(2024, Calendar.JANUARY, 1, 12, 0, 0)), // Mon
+                commitAt(dateUTC(2024, Calendar.JANUARY, 2, 9, 0, 0)),  // Tue
+                commitAt(dateUTC(2024, Calendar.JANUARY, 2, 11, 0, 0))  // Tue
+        );
+
+        doReturn(commits).when(my).getCommits();
+
+        assertEquals("Monday", my.getMostPopularDay());
+    }
+
+    @Test
+    void getMostPopularDay_throwsWhenCommitDateIsNull() throws IOException {
+        GitHub gh = mock(GitHub.class);
+        MyGithub my = spy(new MyGithub(gh));
+
+        GHCommit c = mock(GHCommit.class);
+        when(c.getCommitDate()).thenReturn(null);
+
+        doReturn(Collections.singletonList(c)).when(my).getCommits();
+
+        assertThrows(NullPointerException.class, my::getMostPopularDay);
+
+    }
+
     @Test
     void getAverageTimeBetweenCommitsSeconds_computesAverageGapSorted() throws IOException {
         GitHub gh = mock(GitHub.class);

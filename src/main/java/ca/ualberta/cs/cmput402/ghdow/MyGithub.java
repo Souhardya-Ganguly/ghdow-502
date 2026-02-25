@@ -38,7 +38,7 @@ public class MyGithub {
             }
         }
 
-        // “gracefully reporting an error message”
+        // gracefully reporting an error message
         System.err.println("ERROR: GitHub API operation failed after " + maxAttempts + " attempts."
                 + (last != null ? " Cause: " + last.getMessage() : ""));
         return Optional.empty();
@@ -120,9 +120,6 @@ public class MyGithub {
     }
 
 
-    // -----------------------------
-    // Step 1 (2): Average time between commits
-    // -----------------------------
     public OptionalDouble getAverageTimeBetweenCommitsSeconds() throws IOException {
         // Collect commit times
         ArrayList<Date> commitDates = new ArrayList<>();
@@ -150,9 +147,6 @@ public class MyGithub {
         return OptionalDouble.of((double) totalSeconds / (double) gaps);
     }
 
-    // -----------------------------
-    // Step 1 (3): Avg time issues stay open (closed issues only)
-    // -----------------------------
     public OptionalDouble getAverageClosedIssueOpenTimeSeconds() throws IOException {
         long totalSeconds = 0L;
         int count = 0;
@@ -177,10 +171,6 @@ public class MyGithub {
         return OptionalDouble.of((double) totalSeconds / (double) count);
     }
 
-    // -----------------------------
-    // Step 1 (4): Avg time PRs stay open
-    // (we count only PRs that are closed; open PRs are ignored)
-    // -----------------------------
     public OptionalDouble getAverageClosedPullRequestOpenTimeSeconds() throws IOException {
         long totalSeconds = 0L;
         int count = 0;
@@ -207,9 +197,6 @@ public class MyGithub {
         return OptionalDouble.of((double) totalSeconds / (double) count);
     }
 
-    // -----------------------------
-    // Step 1 (5): Avg number of branches per repo
-    // -----------------------------
     public OptionalDouble getAverageBranchesPerRepo() throws IOException {
         List<GHRepository> repos = getRepos();
         if (repos.isEmpty()) return OptionalDouble.empty();
